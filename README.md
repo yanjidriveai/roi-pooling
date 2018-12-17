@@ -24,7 +24,7 @@ Since it uses compilation
 ```bash
 $ git clone git@github.com:deepsense-io/roi-pooling.git
 $ cd roi-pooling
-$ python setup.py install
+$ make -C roi_pooling build
 ```
 
 Right now we provide only GPU implementation (no CPU at this time).

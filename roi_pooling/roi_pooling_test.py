@@ -42,44 +42,6 @@ class RoiPoolingTest(tf.test.TestCase):
             self.assertLess(numerical_grad_error_1, 1e-4)
             self.assertLess(numerical_grad_error_2, 1e-4)
 
-    def test_shape_inference_1(self):
-        pooled_w, pooled_h = 2, 2
-        input_w, input_h = 200, 200
-        n_channels = 3
-        n_batches = None
-        input = tf.placeholder(tf.float32, shape=[n_batches, input_w, input_h, n_channels])
-
-        n_rois = None
-        single_roi_dimension = 5
-        rois = tf.placeholder(tf.int32, shape=[n_rois, single_roi_dimension])
-
-        y = roi_pooling(input, rois, pool_height=pooled_w, pool_width=pooled_h)
-
-        self.assertEqual(y.get_shape().ndims, 4)
-        self.assertIs(y.get_shape()[0].value, n_rois)
-        self.assertIs(y.get_shape()[1].value, n_channels)
-        self.assertIs(y.get_shape()[2].value, pooled_h)
-        self.assertIs(y.get_shape()[3].value, pooled_w)
-
-    def test_shape_inference_2(self):
-        pooled_w, pooled_h = 3, 4
-        input_w, input_h = 200, 300
-        n_channels = 3
-        n_batches = None
-        input = tf.placeholder(tf.float32, shape=[n_batches, input_w, input_h, n_channels])
-
-        n_rois = None
-        single_roi_dimension = 5
-        rois = tf.placeholder(tf.int32, shape=[n_rois, single_roi_dimension])
-
-        y = roi_pooling(input, rois, pool_height=pooled_w, pool_width=pooled_h)
-
-        self.assertEqual(y.get_shape().ndims, 4)
-        self.assertIs(y.get_shape()[0].value, n_rois)
-        self.assertIs(y.get_shape()[1].value, n_channels)
-        self.assertIs(y.get_shape()[2].value, pooled_h)
-        self.assertIs(y.get_shape()[3].value, pooled_w)
-
     def test_very_big_output(self):
         """
         This test checks whether the layer can handle a corner case
